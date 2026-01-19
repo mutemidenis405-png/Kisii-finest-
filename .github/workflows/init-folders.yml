@@ -1,0 +1,58 @@
+name: Initialize Monster Repo Folders
+
+on:
+  workflow_dispatch: # allows manual trigger
+
+jobs:
+  create-folders:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Create folders with .gitkeep placeholders
+      - name: Create folder structure
+        run: |
+          # GitHub Actions requires files to track folders
+          mkdir -p .github/workflows
+          echo "# Placeholder" > .github/workflows/.gitkeep
+
+          mkdir -p gradle/wrapper
+          echo "# Placeholder" > gradle/wrapper/.gitkeep
+
+          touch gradlew
+          touch gradlew.bat
+          touch build.gradle
+          touch settings.gradle
+
+          mkdir -p app/src/main/java/com/monster/study
+          echo "// Placeholder" > app/src/main/java/com/monster/study/.gitkeep
+
+          mkdir -p app/src/main/assets
+          echo "# Placeholder" > app/src/main/assets/.gitkeep
+
+          mkdir -p app/src/main/res/layout
+          echo "# Placeholder" > app/src/main/res/layout/.gitkeep
+
+          mkdir -p app/src/main/res/drawable
+          echo "# Placeholder" > app/src/main/res/drawable/.gitkeep
+
+          mkdir -p app/src/main/res/values
+          echo "# Placeholder" > app/src/main/res/values/.gitkeep
+
+          mkdir -p app/src/main/res/raw
+          echo "# Placeholder" > app/src/main/res/raw/.gitkeep
+
+          mkdir -p libs
+          echo "# Placeholder" > libs/.gitkeep
+
+      # 3. Commit and push the new folders
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Initialize repo folder structure with placeholders"
+          git push
